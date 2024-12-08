@@ -1,5 +1,14 @@
 if ( navigator.serviceWorker ) {
-    navigator.serviceWorker.register("/sw.js");
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+                console.log("Service Worker registrado con éxito:", registration);
+            })
+            .catch((error) => {
+                console.error("Error al registrar el Service Worker:", error);
+            });
+    });
 }
 
 const enviarNotificaciones = () => {
@@ -30,3 +39,29 @@ const mostrarNotificaciones = () => {
         })
     }
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const welcomeMessage = document.getElementById('welcomeMessage');
+
+    try {
+        // URL de ipapi para obtener información de ubicación
+        const url = `https://ipapi.co/json/`;
+
+        // Realiza la solicitud a ipapi
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data && data.country_name) {
+            // Extrae el país del usuario
+            const country = data.country_name;
+
+            // Muestra el mensaje personalizado
+            welcomeMessage.textContent = `Bienvenido habitante de ${country}`;
+        } else {
+            welcomeMessage.textContent = "No se pudo determinar tu nacionalidad.";
+        }
+    } catch (error) {
+        console.error('Error al obtener la información de ubicación:', error);
+        welcomeMessage.textContent = "No se pudo determinar tu nacionalidad.";
+    }
+});
