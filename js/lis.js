@@ -60,7 +60,7 @@ function eliminarRecordatorio(id) {
 function editarRecordatorio(id) {
     // Aquí puedes guardar el ID en el localStorage para usarlo en la pantalla de edición
     localStorage.setItem("recordatorioEditar", id);
-    window.location.href = "editarRecordatorio.html";
+    window.location.href = `editrecordatorio.html?id=${id}`;
 }
 
 // Mostrar los recordatorios al cargar la página
