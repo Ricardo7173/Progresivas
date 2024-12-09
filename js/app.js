@@ -11,34 +11,40 @@ if ( navigator.serviceWorker ) {
     });
 }
 
-const enviarNotificaciones = () => {
-    const notificationOpts = {
-        body: "Este es el cuerpo de la notificacion",
-        icon: "img/icono.png"
-    }
-
-    const n = new Notification("Nueva Notificacion", notificationOpts);
-    n.onclick =() => {
-        console.log("Le dieron clic a la notificacion");
-    }
-}
-
 const mostrarNotificaciones = () => {
-    if(!window.Notification){
-        console.log("El navegador no soporta notificaciones")
+    if (!window.Notification) {
+        console.log("El navegador no soporta notificaciones");
         return;
     }
-    if(Notification.permission === "granted"){
-        new Notification("Hola, si soporta las notificaciones");
-    }else if(Notification.permission !== "denied" || Notification.permission === "default"){
-        Notification.requestPermission(resultado => {
+
+    if (Notification.permission === "granted") {
+        enviarNotificaciones();
+    } else if (
+        Notification.permission !== "denied" ||
+        Notification.permission === "default"
+    ) {
+        Notification.requestPermission((resultado) => {
             console.log("Permiso: ", resultado);
-            if(resultado === "granted"){
-                new Notification("Hola, si tenemos permisos")
+            if (resultado === "granted") {
+                enviarNotificaciones();
             }
-        })
+        });
     }
-}
+};
+
+const enviarNotificaciones = () => {
+    const notificationOpts = {
+        body: "Este es el cuerpo de la notificación",
+        icon: "img/icono.png",
+    };
+
+    const n = new Notification("Nueva Notificación", notificationOpts);
+    n.onclick = () => {
+        console.log("Le dieron clic a la notificación");
+    };
+};
+
+document.getElementById("btnNotificaciones").addEventListener("click", mostrarNotificaciones);
 
 document.addEventListener('DOMContentLoaded', async () => {
     const welcomeMessage = document.getElementById('welcomeMessage');

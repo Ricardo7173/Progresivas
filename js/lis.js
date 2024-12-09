@@ -22,12 +22,13 @@ function mostrarRecordatorios() {
         }
 
         recordatorios.forEach((recordatorio) => {
+            // Creamos el elemento visual de cada recordatorio
             const item = document.createElement("div");
             item.className = "list-group-item d-flex justify-content-between align-items-center";
             item.innerHTML = `
                 <div>
                     <h5 class="mb-1">${recordatorio.nombre}</h5>
-                    <p class="mb-1 text-muted">${recordatorio.fechaHora}</p>
+                    <p class="mb-1 text-muted">${new Date(recordatorio.fechaHora).toLocaleString()}</p>
                     <small>${recordatorio.descripcion}</small>
                 </div>
                 <div>
@@ -48,7 +49,7 @@ function eliminarRecordatorio(id) {
     const request = objectStore.delete(id);
     request.onsuccess = function () {
         console.log(`Recordatorio con ID ${id} eliminado`);
-        mostrarRecordatorios();
+        mostrarRecordatorios(); // Actualizar la lista
     };
 
     request.onerror = function (e) {
@@ -58,7 +59,7 @@ function eliminarRecordatorio(id) {
 
 // Función para redirigir a la pantalla de edición
 function editarRecordatorio(id) {
-    // Aquí puedes guardar el ID en el localStorage para usarlo en la pantalla de edición
+    // Guardamos el ID en el localStorage para usarlo en la pantalla de edición
     localStorage.setItem("recordatorioEditar", id);
     window.location.href = `editrecordatorio.html?id=${id}`;
 }
