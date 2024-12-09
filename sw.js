@@ -8,10 +8,14 @@ const ARCHIVOS_ESTATICOS = [
     "/index.html",
     "/css/style.css",
     "/css/AGRstyle.css",
+    "/css/LISstyle.css",
     "/js/app.js",
     "/js/agr.js",
+    "/js/edit.js",
+    "/js/lis.js",
     "/paginas/agrrecordatorio.html",
     "/paginas/lisrecordatorio.html",
+    "/paginas/editrecordatorio.html",
 ];
 
 self.addEventListener("install", (evento) => {
